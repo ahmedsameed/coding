@@ -86,7 +86,18 @@ const App = () => {
     handleMenuClose();
   };
 
-  const theme = createTheme({ palette: { mode: darkMode ? 'dark' : 'light', primary: { main: '#6200ea', }, background: { default: darkMode ? '#121212' : '#f4f4f4', paper: darkMode ? '#333' : '#fff', }, text: { primary: darkMode ? '#ffffff' : '#000000', secondary: darkMode ? '#bbbbbb' : '#555555', }, }, typography: { allVariants: { color: darkMode ? '#ffffff' : '#000000', }, }, });
+  // Use a high-contrast palette that's more distinguishable for common forms of color blindness
+  // (replaces purple/orange accents with a strong blue + neutral backgrounds)
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: { main: '#1976d2', contrastText: '#ffffff', dark: '#115293' }, // accessible blue
+      secondary: { main: '#009688', contrastText: '#ffffff', dark: '#00675b' }, // teal for highlights
+      background: { default: darkMode ? '#121212' : '#f4f4f4', paper: darkMode ? '#333' : '#ffffff' },
+      text: { primary: darkMode ? '#ffffff' : '#000000', secondary: darkMode ? '#bbbbbb' : '#555555' },
+    },
+    typography: { allVariants: { color: darkMode ? '#ffffff' : '#000000' } },
+  });
 
   const toggleFavorite = (index, event) => {
     event.stopPropagation();
@@ -138,7 +149,8 @@ const App = () => {
             sx={{
               width: { xs: 70, sm: 200 },
               height: '100vh',
-              backgroundColor: darkMode ? '#333' : '#f3e5f5',
+              // neutral, light background to avoid washed-out pinks for color-blind users
+              backgroundColor: darkMode ? '#333' : '#f7fafc',
               display: 'flex',
               flexDirection: 'column',
               py: 4,
@@ -161,12 +173,14 @@ const App = () => {
                   to={`/restaurant/${index}`}
                   sx={{
                     '&:hover': {
-                      backgroundColor: darkMode ? '#444' : '#ddd',
+                      backgroundColor: theme.palette.secondary.main,
+                      color: theme.palette.secondary.contrastText,
                     },
-                    transition: 'background-color 0.3s',
+                    border: restaurant.isFavorite ? `2px solid ${theme.palette.primary.main}` : '2px solid transparent',
+                    transition: 'background-color 0.3s, border 0.3s',
                   }}
                 >
-                  <ListItemText primary={restaurant.name} sx={{ color: darkMode ? 'white' : 'black' }} />
+                  <ListItemText primary={restaurant.name} sx={{ color: darkMode ? 'white' : 'black', fontWeight: restaurant.isFavorite ? 'bold' : 'normal' }} />
                 </ListItem>
               ))}
             </List>
@@ -190,7 +204,8 @@ const App = () => {
               position="fixed"
               elevation={0}
               sx={{
-                backgroundColor: darkMode ? '#444' : '#f8e4f4',
+                // use a neutral/light AppBar background for better contrast and to avoid purple/pink hues
+                backgroundColor: darkMode ? '#444' : '#f7fafc',
                 borderBottom: '1px solid #e0e0e0',
                 width: '100%',
                 top: 0,
@@ -229,16 +244,16 @@ const App = () => {
                 />
 
                 <Button 
-                  color="inherit" 
-                  component={Link} 
-                  to="/location1" 
-                  sx={{ textTransform: 'none', fontWeight: 'bold', color: darkMode ? 'white' : 'black' }}
+                  color="primary"
+                  component={Link}
+                  to="/location1"
+                  sx={{ textTransform: 'none', fontWeight: 'bold', color: '#fff', backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#115293' } }}
                 >
                   Location
                 </Button>
 
                 <IconButton color="inherit" onClick={handleMenuOpen}>
-                  <TuneIcon />
+                  <TuneIcon sx={{ color: darkMode ? 'white' : 'black' }} />
                 </IconButton>
 
                 <Menu
@@ -254,16 +269,16 @@ const App = () => {
                 {currentUser ? (
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Typography variant="body1" sx={{ color: darkMode ? 'white' : 'black' }}>Welcome, {currentUser.email}</Typography>
-                    <Button variant="outlined" color="inherit" onClick={handleLogout} sx={{ textTransform: 'none', fontWeight: 'bold' }}>
+                    <Button variant="outlined" onClick={handleLogout} sx={{ textTransform: 'none', fontWeight: 'bold', color: darkMode ? 'white' : 'black', borderColor: darkMode ? 'white' : 'black', '&:hover': { backgroundColor: darkMode ? '#555' : '#e3f2fd' } }}>
                       Logout
                     </Button>
                   </Box>
                 ) : (
                   <Box sx={{ display: 'flex', gap: 1 }}>
-                    <Button variant="outlined" color="primary" component={Link} to="/login" sx={{ textTransform: 'none', fontWeight: 'bold' }}>
+                    <Button variant="outlined" color="primary" component={Link} to="/login" sx={{ textTransform: 'none', fontWeight: 'bold', borderColor: theme.palette.primary.main, color: theme.palette.primary.main, '&:hover': { backgroundColor: theme.palette.primary.light } }}>
                       Login
                     </Button>
-                    <Button variant="contained" color="primary" component={Link} to="/signup" sx={{ textTransform: 'none', fontWeight: 'bold' }}>
+                    <Button variant="contained" color="primary" component={Link} to="/signup" sx={{ textTransform: 'none', fontWeight: 'bold', backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText, '&:hover': { backgroundColor: theme.palette.primary.dark } }}>
                       Sign Up
                     </Button>
                   </Box>
@@ -341,7 +356,8 @@ const App = () => {
                               <IconButton
                                 onClick={(event) => toggleFavorite(index, event)}
                                 color="primary"
-                                sx={{ color: restaurant.isFavorite ? 'red' : 'gray' }}
+                                // use the primary (blue) color for active favorites so they remain visible under color-blind sims
+                                sx={{ color: restaurant.isFavorite ? theme.palette.primary.main : 'gray', border: restaurant.isFavorite ? `2px solid ${theme.palette.primary.main}` : '2px solid transparent', borderRadius: '50%' }}
                               >
                                 {restaurant.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                               </IconButton>

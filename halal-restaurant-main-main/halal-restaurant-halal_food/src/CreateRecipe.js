@@ -118,7 +118,24 @@ const CreateRecipe = () => {
             key={category}
             variant={selectedCategory === category ? 'contained' : 'outlined'}
             onClick={() => handleCategoryChange(category)}
-            sx={{ mr: 1, mb: 1, color: 'black' }}
+            sx={theme => ({
+              mr: 1,
+              mb: 1,
+              color: selectedCategory === category
+                ? '#fff'
+                : theme.palette.mode === 'dark' ? '#e0e0e0' : '#222',
+              backgroundColor: selectedCategory === category
+                ? theme.palette.mode === 'dark' ? '#1976d2' : '#1976d2'
+                : 'transparent',
+              borderColor: selectedCategory === category ? '#1976d2' : theme.palette.mode === 'dark' ? '#444' : '#e0e0e0',
+              fontWeight: selectedCategory === category ? 'bold' : 'normal',
+              '&:hover': {
+                backgroundColor: selectedCategory === category
+                  ? theme.palette.mode === 'dark' ? '#115293' : '#115293'
+                  : theme.palette.mode === 'dark' ? '#333' : '#e3f2fd',
+                color: '#fff',
+              },
+            })}
           >
             {category}
           </Button>
@@ -130,16 +147,30 @@ const CreateRecipe = () => {
         {filteredIngredients.map((ingredient) => (
           <Grid item xs={6} sm={4} md={3} key={ingredient.id}>
             <Paper
-              sx={{
+              sx={theme => ({
                 textAlign: 'center',
                 padding: 2,
                 cursor: 'pointer',
-                backgroundColor: selectedIngredients.includes(ingredient.name) ? 'lightgreen' : 'white',
-                transition: 'background-color 0.3s ease',
+                backgroundColor: selectedIngredients.includes(ingredient.name)
+                  ? '#1976d2'
+                  : theme.palette.mode === 'dark' ? '#222' : 'white',
+                color: selectedIngredients.includes(ingredient.name)
+                  ? '#fff'
+                  : theme.palette.mode === 'dark' ? '#e0e0e0' : 'black',
+                border: selectedIngredients.includes(ingredient.name)
+                  ? '3px solid #1976d2'
+                  : theme.palette.mode === 'dark' ? '2px solid #444' : '2px solid #e0e0e0',
+                fontWeight: selectedIngredients.includes(ingredient.name) ? 'bold' : 'normal',
+                transition: 'background-color 0.3s, border 0.3s, color 0.3s',
                 '&:hover': {
-                  backgroundColor: 'lightblue',
+                  backgroundColor: selectedIngredients.includes(ingredient.name)
+                    ? '#115293'
+                    : theme.palette.mode === 'dark' ? '#333' : '#e3f2fd',
+                  color: selectedIngredients.includes(ingredient.name)
+                    ? '#fff'
+                    : theme.palette.mode === 'dark' ? '#fff' : 'black',
                 },
-              }}
+              })}
               onClick={() => handleIngredientToggle(ingredient.name)}
             >
               <Typography variant="h6">{ingredient.name}</Typography>

@@ -69,8 +69,9 @@ const FoodWaste = () => {
   const QuoteBox = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
     marginBottom: theme.spacing(4),
-    backgroundColor: 'transparent',
-    boxShadow: theme.palette.mode === 'dark' ? 'none' : theme.shadows[0.5],
+    // use theme surface so it remains visible under color-blind sims
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.palette.mode === 'dark' ? 'none' : theme.shadows[1],
     borderRadius: theme.shape.borderRadius,
   }));
 
@@ -88,7 +89,7 @@ const FoodWaste = () => {
   }));
 
   return (
-    <Box sx={{ p: 3, textAlign: 'left' }}>
+    <Box sx={{ p: 3, textAlign: 'left', backgroundColor: 'background.paper', color: 'text.primary' }}>
       <Typography variant="h3" gutterBottom>Food Waste</Typography>
       <Box sx={{ mb: 4 }}>
         {quotes.map((quote, index) => (
@@ -107,7 +108,7 @@ const FoodWaste = () => {
         value={city}
         onChange={handleCityChange}
         displayEmpty
-        sx={{ width: 250, mb: 4 }}
+        sx={{ width: 250, mb: 4, backgroundColor: 'background.paper', color: 'text.primary' }}
       >
         <MenuItem value="" disabled>Select a City</MenuItem>
         <MenuItem value="Denton">Denton</MenuItem>
@@ -144,8 +145,14 @@ const FoodWaste = () => {
           variant="contained"
           color="primary"
           component={Link}
-          to="/shelter"
-          sx={{ textTransform: 'none', fontWeight: 'bold' }}
+          to="/Shelter"
+          sx={{
+            textTransform: 'none',
+            fontWeight: 'bold',
+            backgroundColor: 'primary.main',
+            color: 'primary.contrastText',
+            '&:hover': { backgroundColor: 'primary.dark' },
+          }}
         >
           Add Shelter
         </Button>

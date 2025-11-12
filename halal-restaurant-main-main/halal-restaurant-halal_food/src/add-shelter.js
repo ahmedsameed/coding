@@ -155,7 +155,7 @@ const Shelter = () => {
           fullWidth
           sx={{ mb: 2 }}
         />
-        <Button variant="contained" color="primary" onClick={handleAddNewShelter}>
+        <Button variant="contained" color="primary" onClick={handleAddNewShelter} sx={{ backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#115293' } }}>
           Add Shelter
         </Button>
       </Box>
@@ -215,10 +215,10 @@ const Shelter = () => {
                     fullWidth
                     sx={{ mb: 2 }}
                   />
-                  <Button variant="contained" color="primary" onClick={handleSaveEdit} sx={{ mr: 2 }}>
+                  <Button variant="contained" color="primary" onClick={handleSaveEdit} sx={{ mr: 2, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#115293' } }}>
                     Save
                   </Button>
-                  <Button variant="outlined" onClick={handleCancelEdit}>
+                  <Button variant="outlined" onClick={handleCancelEdit} sx={{ borderColor: '#1976d2', color: '#1976d2', '&:hover': { backgroundColor: '#e3f2fd', borderColor: '#115293', color: '#115293' } }}>
                     Cancel
                   </Button>
                 </Box>
@@ -247,11 +247,36 @@ const Shelter = () => {
                     Capacity: {shelter.capacity}
                   </Typography>
                   <Box sx={{ mt: 2 }}>
-                    <Button variant="text" color="primary" onClick={() => handleEditClick(index)} sx={{ mr: 2 }}>
-                      Edit
+                    <Button 
+                      variant="outlined" 
+                      onClick={() => handleEditClick(index)} 
+                      sx={{ 
+                        mr: 2,
+                        borderColor: '#1976d2',
+                        color: '#1976d2',
+                        fontWeight: 'bold',
+                        '&:hover': { 
+                          backgroundColor: '#e3f2fd', 
+                          borderColor: '#115293',
+                          color: '#115293'
+                        }
+                      }}
+                    >
+                      ✎ Edit
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={() => handleDeleteShelter(index)}>
-                      Delete
+                    <Button 
+                      variant="contained" 
+                      onClick={() => handleDeleteShelter(index)}
+                      sx={{ 
+                        backgroundColor: '#d32f2f',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        '&:hover': { 
+                          backgroundColor: '#b71c1c'
+                        }
+                      }}
+                    >
+                      ✕ Delete
                     </Button>
                   </Box>
                 </Box>

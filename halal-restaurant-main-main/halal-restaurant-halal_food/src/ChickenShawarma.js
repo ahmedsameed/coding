@@ -42,7 +42,7 @@ const ViewRecipe = React.memo(() => {
   };
 
   return (
-    <Box sx={{ maxWidth: 'lg', mx: 'auto', p: 3 }}>
+    <Box sx={{ maxWidth: 'lg', mx: 'auto', p: 3, backgroundColor: 'background.paper', color: 'text.primary' }}>
       <Typography variant="h4" gutterBottom>
         {recipe.title}
       </Typography>
@@ -82,14 +82,19 @@ const ViewRecipe = React.memo(() => {
                 }}
               />
               <CardContent>
-                <Typography variant="body1">{instruction.text}</Typography>
+                <Typography variant="body1" sx={{ color: 'text.primary' }}>{instruction.text}</Typography>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
 
-      <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={handleShare}>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ mt: 3, backgroundColor: 'primary.main', color: 'primary.contrastText', textTransform: 'none', fontWeight: 'bold', '&:hover': { backgroundColor: 'primary.dark' } }}
+        onClick={handleShare}
+      >
         Share Recipe
       </Button>
     </Box>
