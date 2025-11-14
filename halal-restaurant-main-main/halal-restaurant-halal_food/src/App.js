@@ -268,17 +268,90 @@ const App = () => {
 
                 {currentUser ? (
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Typography variant="body1" sx={{ color: darkMode ? 'white' : 'black' }}>Welcome, {currentUser.email}</Typography>
-                    <Button variant="outlined" onClick={handleLogout} sx={{ textTransform: 'none', fontWeight: 'bold', color: darkMode ? 'white' : 'black', borderColor: darkMode ? 'white' : 'black', '&:hover': { backgroundColor: darkMode ? '#555' : '#e3f2fd' } }}>
+                    <Typography variant="body1" sx={{ color: darkMode ? 'white' : 'black' }}>
+                      Welcome, {currentUser.email}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      onClick={handleLogout}
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'bold',
+                        borderRadius: 3,
+                        px: 2.5,
+                        py: 1,
+                        background: darkMode
+                          ? 'linear-gradient(135deg, #ab47bc, #8e24aa)'
+                          : 'linear-gradient(135deg, #8e24aa, #ab47bc)',
+                        boxShadow: darkMode
+                          ? '0 3px 8px rgba(171,71,188,0.4)'
+                          : '0 3px 8px rgba(142,36,170,0.3)',
+                        color: '#fff',
+                        '&:hover': {
+                          background: darkMode
+                            ? 'linear-gradient(135deg, #ba68c8, #9c27b0)'
+                            : 'linear-gradient(135deg, #9c27b0, #ba68c8)',
+                          transform: 'translateY(-2px)',
+                        },
+                      }}
+                    >
                       Logout
                     </Button>
                   </Box>
                 ) : (
                   <Box sx={{ display: 'flex', gap: 1 }}>
-                    <Button variant="outlined" color="primary" component={Link} to="/login" sx={{ textTransform: 'none', fontWeight: 'bold', borderColor: theme.palette.primary.main, color: theme.palette.primary.main, '&:hover': { backgroundColor: theme.palette.primary.light } }}>
+                    {/* Modern Login */}
+                    <Button
+                      component={Link}
+                      to="/login"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'bold',
+                        borderRadius: 3,
+                        px: 2.5,
+                        py: 1,
+                        border: '1px solid',
+                        borderColor: darkMode ? 'rgba(255,255,255,0.4)' : '#b39ddb',
+                        background: darkMode
+                          ? 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                          : 'linear-gradient(135deg, #ffffff, #f3e5f5)',
+                        color: darkMode ? '#fff' : '#6a1b9a',
+                        '&:hover': {
+                          background: darkMode
+                            ? 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08))'
+                            : 'linear-gradient(135deg, #f3e5f5, #e1bee7)',
+                          transform: 'scale(1.05)',
+                        },
+                      }}
+                    >
                       Login
                     </Button>
-                    <Button variant="contained" color="primary" component={Link} to="/signup" sx={{ textTransform: 'none', fontWeight: 'bold', backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText, '&:hover': { backgroundColor: theme.palette.primary.dark } }}>
+
+                    {/* Stylish Sign Up */}
+                    <Button
+                      component={Link}
+                      to="/signup"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'bold',
+                        borderRadius: 3,
+                        px: 2.8,
+                        py: 1,
+                        background: darkMode
+                          ? 'linear-gradient(135deg, #ab47bc, #8e24aa)'
+                          : 'linear-gradient(135deg, #8e24aa, #ab47bc)',
+                        boxShadow: darkMode
+                          ? '0 3px 8px rgba(171,71,188,0.4)'
+                          : '0 3px 8px rgba(142,36,170,0.3)',
+                        color: '#fff',
+                        '&:hover': {
+                          background: darkMode
+                            ? 'linear-gradient(135deg, #ba68c8, #9c27b0)'
+                            : 'linear-gradient(135deg, #9c27b0, #ba68c8)',
+                          transform: 'translateY(-2px)',
+                        },
+                      }}
+                    >
                       Sign Up
                     </Button>
                   </Box>
